@@ -1,6 +1,6 @@
 import pygame as pg
 import numpy as np
-import players as pl
+from pong import players as pl
 
 
 class Ball(pg.sprite.Sprite):
