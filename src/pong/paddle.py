@@ -2,10 +2,10 @@ import pygame as pg
 
 
 class Paddle(pg.sprite.Sprite):
-    def __init__(self, side):
+    def __init__(self, side, new_pos):
         pg.sprite.Sprite.__init__(self)
+        self.rect = new_pos
         self.move_pos = [0, 0]
-        self.image, self.rect = load_png('bat.png')
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.side = side
@@ -23,7 +23,7 @@ class Paddle(pg.sprite.Sprite):
     def update(self):
         new_pos = self.rect.move(self.move_pos)
         if self.area.contains(new_pos):
-            self.rect = new_pos
+            pass
         pg.event.pump()
 
     def move_up(self):
