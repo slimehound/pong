@@ -11,19 +11,14 @@ white = (255, 255, 255)
 
 # Open a new window
 my_win = xw.Window(1024, 768)
-'''
-size = (700, 500)
-screen = py.display.set_mode(size)
-py.display.set_caption("Pong")
-'''
 
 paddleA = xp.Paddle(white, 10, 100)
 paddleA.rect.x = 0
-paddleA.rect.y = 384
+paddleA.rect.y = 334
 
 paddleB = xp.Paddle(white, 10, 100)
 paddleB.rect.x = 1014
-paddleB.rect.y = 384
+paddleB.rect.y = 334
 
 ball = xb.Ball(white, 10, 10)
 ball.rect.x = 507
@@ -69,16 +64,38 @@ while running:
     all_sprites_list.update()
 
     # Check if the ball is bouncing against any of the 4 walls
+    '''
+    with open('output.txt', 'a') as f:
+        f.write('\nBefore')
+        f.write('\ncx = ' + str(ball.rect.x))
+        f.write('\ncy = ' + str(ball.rect.y))
+        f.write('\nvx = ' + str(ball.velocity[0]))
+        f.write('\nvy = ' + str(ball.velocity[1]))
+        f.write('\n----------')
+    '''
     if ball.rect.x >= 1014:
         scoreA += 1
+        ball.rect.x = 2028 - ball.rect.x
         ball.velocity[0] = -ball.velocity[0]
     if ball.rect.x <= 0:
         scoreB += 1
+        ball.rect.x = -ball.rect.x
         ball.velocity[0] = -ball.velocity[0]
     if ball.rect.y > 758:
+        ball.rect.y = 1516 - ball.rect.y
         ball.velocity[1] = -ball.velocity[1]
     if ball.rect.y < 0:
+        ball.rect.y = -ball.rect.y
         ball.velocity[1] = -ball.velocity[1]
+    '''
+    with open('output.txt', 'a') as f:
+        f.write('\nAfter')
+        f.write('\ncx = ' + str(ball.rect.x))
+        f.write('\ncy = ' + str(ball.rect.y))
+        f.write('\nvx = ' + str(ball.velocity[0]))
+        f.write('\nvy = ' + str(ball.velocity[1]))
+        f.write('\n----------')
+    '''
 
     # Detect collisions between the ball and the paddles
     if py.sprite.collide_mask(ball, paddleA) or py.sprite.collide_mask(ball, paddleB):
